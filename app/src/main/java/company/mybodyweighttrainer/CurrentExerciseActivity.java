@@ -59,6 +59,10 @@ public class CurrentExerciseActivity extends AppCompatActivity {
             String numberTargetReps = mNumberReps.getText().toString();
             intent.putExtra(TARGET_REPS_KEY, numberTargetReps);
             startActivity(intent);
+
+            Long numberSetsRemaining = Long.parseLong(mNumberSetsRemaining.getText().toString());
+            numberSetsRemaining--;
+            mNumberSetsRemaining.setText(numberSetsRemaining.toString());
         }
     }
 }
