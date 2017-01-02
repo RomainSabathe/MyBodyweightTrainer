@@ -15,8 +15,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView4"
-        android:layout_alignRight="@+id/text_number_reps"
-        android:layout_alignEnd="@+id/text_number_reps"
+        android:layout_alignRight="@+id/text_number_reps_to_do"
+        android:layout_alignEnd="@+id/text_number_reps_to_do"
         android:id="@+id/text_number_sets_remaining"
         android:textSize="18sp" />
 
@@ -35,7 +35,7 @@
         android:text="12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/text_number_reps"
+        android:id="@+id/text_number_reps_to_do"
         android:layout_marginRight="11dp"
         android:layout_marginEnd="11dp"
         android:textSize="24sp"
@@ -81,5 +81,7 @@
         android:id="@+id/button_im_done"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:onClick="imDone" />
+
 </RelativeLayout>

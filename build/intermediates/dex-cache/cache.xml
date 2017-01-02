@@ -97,7 +97,7 @@
         jumboMode="true"
         optimize="true"
         revision="25.0.2"
-        sha1="dceb5b18a46561e8b406d0912cc0ad047b887b9c">
+        sha1="c048453ead95a278eb067d15cd2c902def26d164">
         <dex dex="/home/romain/git/MyBodyweightTrainer/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_10a185a73439ec3917fde93590f40e3962efba36/classes.dex" />
     </item>
     <item
