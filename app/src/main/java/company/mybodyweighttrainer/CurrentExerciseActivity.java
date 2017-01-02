@@ -48,7 +48,7 @@ public class CurrentExerciseActivity extends AppCompatActivity {
 
                 @Override
                 public void onFinish() {
-                    mTimeRemaining.setText("-");
+                    mTimeRemaining.setText("GO GO GO!");
                     mIsResting = false;
                 }
             };

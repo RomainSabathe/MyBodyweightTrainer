@@ -10,6 +10,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class NumberRepsInputActivity extends AppCompatActivity {
 
@@ -52,6 +53,14 @@ public class NumberRepsInputActivity extends AppCompatActivity {
         String numberRepsDone = mNumberRepsPerformed.getText().toString();
         returnIntent.putExtra(NUMBER_REPS_DONE_KEY, numberRepsDone);
         setResult(RESULT_OK, returnIntent);
+
+        // Displaying a little motivation message.
+        Context context = getApplicationContext();
+        CharSequence text = "Congrats! Keep up man!";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
         finish();
     }
 }

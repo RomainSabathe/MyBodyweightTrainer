@@ -71,7 +71,8 @@
         android:textSize="36sp"
         android:layout_marginTop="40dp"
         android:layout_below="@+id/text_time_remaining"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center" />
 
     <Button
         android:text="I'm done"
