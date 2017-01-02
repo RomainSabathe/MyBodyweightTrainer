@@ -3,6 +3,7 @@ package company.mybodyweighttrainer;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -13,6 +14,9 @@ public class CurrentExerciseActivity extends AppCompatActivity {
     private TextView mNumberReps;
     private TextView mNumberSetsRemaining;
     private Button mImDone;
+
+    private CountDownTimer mTimer;
+    private boolean mIsResting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,17 +29,27 @@ public class CurrentExerciseActivity extends AppCompatActivity {
         mNumberSetsRemaining = (TextView)findViewById(R.id.text_number_sets_remaining);
         mImDone = (Button)findViewById(R.id.button_im_done);
 
-        new CountDownTimer(90000, 1000) {
-
+        mImDone.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onTick(long millisUntilFinished) {
-                mTimeRemaining.setText(Long.valueOf(millisUntilFinished / 1000).toString());
-            }
+            public void onClick(View v) {
+                int rest_time = 10000;
+                if(!mIsResting) {
+                    mTimer = new CountDownTimer(rest_time, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                            mTimeRemaining.setText(Long.valueOf(millisUntilFinished / 1000).toString());
+                        }
 
-            @Override
-            public void onFinish() {
-                mTimeRemaining.setText(Long.valueOf(90000 / 1000).toString());
+                        @Override
+                        public void onFinish() {
+                            mTimeRemaining.setText("-");
+                            mIsResting = false;
+                        }
+                    };
+                    mTimer.start();
+                    mIsResting = true;
+                }
             }
-        }.start();
+        });
     }
 }
