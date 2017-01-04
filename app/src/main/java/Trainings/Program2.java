@@ -17,14 +17,14 @@ public class Program2 extends Program {
         ExerciseSet exerciseSet1 = new ExerciseSet(
                 new Dips(),
                 new ArrayList<Integer>(
-                        Arrays.asList(25, 25, 25, 25, 25, 60)
+                        Arrays.asList(5, 10, 15, 60)
                 )
         );
 
         ExerciseSet exerciseSet2 = new ExerciseSet(
                 new PullUp(),
                 new ArrayList<Integer>(
-                        Arrays.asList(25, 25, 25, 60)
+                        Arrays.asList(5, 10, 15, 60)
                 )
         );
 

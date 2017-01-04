@@ -15,6 +15,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 
+import Exercises.Exercise;
+import Trainings.Program;
+import Trainings.Program2;
+
 public class CurrentExerciseActivity extends AppCompatActivity {
 
     private TextView mTimeRemaining;
@@ -25,6 +29,10 @@ public class CurrentExerciseActivity extends AppCompatActivity {
 
     private CountDownTimer mTimer;
     private boolean mIsResting;
+
+    private Program mProgram;
+    private String mCurrentExerciseName;
+    private int mCurrentRestingTime;
 
     public final static String TARGET_REPS_KEY = "company.mybodyweighttrainer.TARGET_REPS";
 
@@ -38,6 +46,9 @@ public class CurrentExerciseActivity extends AppCompatActivity {
         mNumberReps = (TextView)findViewById(R.id.text_number_reps_to_do);
         mNumberSetsRemaining = (TextView)findViewById(R.id.text_number_sets_remaining);
         mImDone = (Button)findViewById(R.id.button_im_done);
+
+        mProgram = new Program2();
+        refreshOnScreenInformation();
     }
 
     protected void onResume() {
@@ -49,11 +60,20 @@ public class CurrentExerciseActivity extends AppCompatActivity {
         writeNumberReps(number_reps_done, context);
     }
 
+    private void refreshOnScreenInformation() {
+        mCurrentExerciseName = mProgram.getNextExercise().getName();
+        mCurrentRestingTime = mProgram.getNextRestingTime();
+
+        mTimeRemaining.setText(mCurrentRestingTime);
+        mExerciseName.setText(mCurrentRestingTime);
+    }
+
     public void imDone(View view) {
-        int rest_time = 10000;
         if(!mIsResting) {
+            mProgram.performOneSet();
+            refreshOnScreenInformation(); // Refreshes the time and exercise name.
             // Starting the timer.
-            mTimer = new CountDownTimer(rest_time, 1000) {
+            mTimer = new CountDownTimer(mCurrentRestingTime, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     Long remaining_time = millisUntilFinished / 1000;

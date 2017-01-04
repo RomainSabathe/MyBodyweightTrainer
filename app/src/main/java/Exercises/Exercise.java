@@ -11,4 +11,8 @@ public abstract class Exercise {
     public Exercise(String name) {
         mName = name;
     }
+
+    public String getName() {
+        return mName;
+    }
 }
