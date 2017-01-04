@@ -5,10 +5,15 @@ import android.content.Intent;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 public class CurrentExerciseActivity extends AppCompatActivity {
 
@@ -33,6 +38,15 @@ public class CurrentExerciseActivity extends AppCompatActivity {
         mNumberReps = (TextView)findViewById(R.id.text_number_reps_to_do);
         mNumberSetsRemaining = (TextView)findViewById(R.id.text_number_sets_remaining);
         mImDone = (Button)findViewById(R.id.button_im_done);
+    }
+
+    protected void onResume() {
+        super.onResume();
+        //Intent intent = getIntent();
+        //String number_reps_done = intent.getStringExtra(NumberRepsInputActivity.NUMBER_REPS_DONE_KEY);
+        String number_reps_done = "3";
+        Context context = getApplicationContext();
+        writeNumberReps(number_reps_done, context);
     }
 
     public void imDone(View view) {
@@ -63,6 +77,17 @@ public class CurrentExerciseActivity extends AppCompatActivity {
             Long numberSetsRemaining = Long.parseLong(mNumberSetsRemaining.getText().toString());
             numberSetsRemaining--;
             mNumberSetsRemaining.setText(numberSetsRemaining.toString());
+        }
+    }
+
+    public void writeNumberReps(String numberReps, Context context) {
+        try {
+            OutputStreamWriter outputStreamWriter =
+                    new OutputStreamWriter(context.openFileOutput("test.txt", Context.MODE_PRIVATE));
+            outputStreamWriter.write(numberReps);
+            outputStreamWriter.close();
+        } catch (IOException e) {
+            Log.e("Exception", "File write failed: " + e.toString());
         }
     }
 }
