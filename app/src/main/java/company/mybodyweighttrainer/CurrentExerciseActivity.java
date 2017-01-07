@@ -64,16 +64,16 @@ public class CurrentExerciseActivity extends AppCompatActivity {
         mCurrentExerciseName = mProgram.getNextExercise().getName();
         mCurrentRestingTime = mProgram.getNextRestingTime();
 
-        mTimeRemaining.setText(mCurrentRestingTime);
-        mExerciseName.setText(mCurrentRestingTime);
+        mTimeRemaining.setText(Integer.toString(mCurrentRestingTime));
+        mExerciseName.setText(mCurrentExerciseName);
     }
 
     public void imDone(View view) {
-        if(!mIsResting) {
+        if(!mIsResting) {  // The button is useless if the user's resting.
             mProgram.performOneSet();
             refreshOnScreenInformation(); // Refreshes the time and exercise name.
-            // Starting the timer.
-            mTimer = new CountDownTimer(mCurrentRestingTime, 1000) {
+            // Starting the timer (reminder: mCurrentRestingTime is in seconds).
+            mTimer = new CountDownTimer(mCurrentRestingTime*1000, 1000) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     Long remaining_time = millisUntilFinished / 1000;
