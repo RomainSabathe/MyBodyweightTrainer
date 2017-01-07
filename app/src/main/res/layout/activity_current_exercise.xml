@@ -10,79 +10,109 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="company.mybodyweighttrainer.CurrentExerciseActivity">
 
-    <TextView
-        android:text="4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView4"
-        android:layout_alignRight="@+id/text_number_reps_to_do"
-        android:layout_alignEnd="@+id/text_number_reps_to_do"
-        android:id="@+id/text_number_sets_remaining"
-        android:textSize="18sp" />
-
-    <TextView
-        android:text="Number of sets remaining"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
-        android:id="@+id/textView4"
-        android:layout_below="@+id/textView3"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textSize="18sp" />
+        android:weightSum="1">
 
-    <TextView
-        android:text="12"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_number_reps_to_do"
-        android:layout_marginRight="11dp"
-        android:layout_marginEnd="11dp"
-        android:textSize="24sp"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_alignRight="@+id/text_exercise_name"
-        android:layout_alignEnd="@+id/text_exercise_name" />
+        <TextView
+            android:text="90"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_time_remaining"
+            android:textSize="36sp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView3"
-        android:text="Number of reps to do"
-        android:textSize="24sp"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:text="ExerciseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_exercise_name"
+            android:textSize="36sp"
+            android:layout_marginTop="40dp"
+            android:layout_below="@+id/text_time_remaining"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center"
+            android:layout_weight="0.33"/>
 
-    <TextView
-        android:text="90"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_time_remaining"
-        android:textSize="36sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.50">
 
-    <TextView
-        android:text="ExerciseName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_exercise_name"
-        android:textSize="36sp"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/text_time_remaining"
-        android:layout_centerHorizontal="true"
-        android:textAlignment="center" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3"
+                android:textSize="24sp"
+                android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_weight="1"
+                android:text="Number of reps to do:"/>
 
-    <Button
-        android:text="I'm done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="46dp"
-        android:id="@+id/button_im_done"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="18sp"
-        android:onClick="imDone" />
+            <TextView
+                android:text="12"
+                android:layout_width="86dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_number_reps_to_do"
+                android:layout_marginRight="11dp"
+                android:layout_marginEnd="11dp"
+                android:textSize="24sp"
+                android:layout_alignBaseline="@+id/textView3"
+                android:layout_alignBottom="@+id/textView3"
+                android:layout_alignRight="@+id/text_exercise_name"
+                android:layout_alignEnd="@+id/text_exercise_name"
+                android:textAlignment="textStart"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:weightSum="1"
+            >
+
+            <TextView
+                android:text="Number of remaining sets:"
+                android:layout_width="257dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView4"
+                android:layout_below="@+id/textView3"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:textSize="18sp"
+                />
+
+            <TextView
+                android:text="4"
+                android:layout_width="72dp"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textView4"
+                android:layout_alignRight="@+id/text_number_reps_to_do"
+                android:layout_alignEnd="@+id/text_number_reps_to_do"
+                android:id="@+id/text_number_sets_remaining"
+                android:textSize="18sp"
+                />
+        </LinearLayout>
+
+        <Button
+            android:text="I'm done"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="46dp"
+            android:id="@+id/button_im_done"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textSize="18sp"
+            android:onClick="imDone" />
+    </LinearLayout>
 
 </RelativeLayout>
