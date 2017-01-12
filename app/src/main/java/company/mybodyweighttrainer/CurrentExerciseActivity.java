@@ -34,7 +34,8 @@ public class CurrentExerciseActivity extends AppCompatActivity {
     private String mCurrentExerciseName;
     private int mCurrentRestingTime;
 
-    public final static String TARGET_REPS_KEY = "company.mybodyweighttrainer.TARGET_REPS";
+    public final static String TARGET_REPS_KEY =
+        "company.mybodyweighttrainer.TARGET_REPS";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +95,8 @@ public class CurrentExerciseActivity extends AppCompatActivity {
             intent.putExtra(TARGET_REPS_KEY, numberTargetReps);
             startActivity(intent);
 
-            Long numberSetsRemaining = Long.parseLong(mNumberSetsRemaining.getText().toString());
+            Long numberSetsRemaining = Long.parseLong(
+                    mNumberSetsRemaining.getText().toString());
             numberSetsRemaining--;
             mNumberSetsRemaining.setText(numberSetsRemaining.toString());
         }
@@ -103,7 +105,8 @@ public class CurrentExerciseActivity extends AppCompatActivity {
     public void writeNumberReps(String numberReps, Context context) {
         try {
             OutputStreamWriter outputStreamWriter =
-                    new OutputStreamWriter(context.openFileOutput("test.txt", Context.MODE_PRIVATE));
+                    new OutputStreamWriter(
+                            context.openFileOutput("test.txt", Context.MODE_PRIVATE));
             outputStreamWriter.write(numberReps);
             outputStreamWriter.close();
         } catch (IOException e) {

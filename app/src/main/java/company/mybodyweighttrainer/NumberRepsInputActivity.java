@@ -15,7 +15,8 @@ import android.widget.Toast;
 public class NumberRepsInputActivity extends AppCompatActivity {
 
     private EditText mNumberRepsPerformed;
-    public final static String NUMBER_REPS_DONE_KEY = "company.mybodyweighttrainer.NUMBER_REPS_DONE";
+    public final static String NUMBER_REPS_DONE_KEY =
+        "company.mybodyweighttrainer.NUMBER_REPS_DONE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,21 +26,25 @@ public class NumberRepsInputActivity extends AppCompatActivity {
         mNumberRepsPerformed = (EditText)findViewById(R.id.text_number_reps_done);
 
         Intent intent = getIntent();
-        String number_reps_target = intent.getStringExtra(CurrentExerciseActivity.TARGET_REPS_KEY);
+        String number_reps_target = intent.getStringExtra(
+                CurrentExerciseActivity.TARGET_REPS_KEY);
         mNumberRepsPerformed.setText(number_reps_target);
 
         // Setting the cursor to the end of the line for faster entry.
         mNumberRepsPerformed.setSelection(mNumberRepsPerformed.getText().length());
 
         // Showing up the keyboard so the user can enter the number of reps.
-        final InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        final InputMethodManager imm = (InputMethodManager)getSystemService(
+                Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
-        mNumberRepsPerformed.setOnEditorActionListener(new TextView.OnEditorActionListener(){
+        mNumberRepsPerformed.setOnEditorActionListener(
+                new TextView.OnEditorActionListener(){
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE | actionId == KeyEvent.KEYCODE_BACK) {
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+                if (actionId == EditorInfo.IME_ACTION_DONE |
+                    actionId == KeyEvent.KEYCODE_BACK) {
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);                  
                     validateEntry();
                     return true;
                 }
