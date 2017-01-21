@@ -3,6 +3,7 @@ package company.mybodyweighttrainer;
 import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,10 +11,14 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.FileInputStream;
 
 import Exercises.Exercise;
 import Trainings.Program;
@@ -52,13 +57,14 @@ public class CurrentExerciseActivity extends AppCompatActivity {
         refreshOnScreenInformation();
     }
 
-    protected void onResume() {
-        super.onResume();
-        //Intent intent = getIntent();
-        //String number_reps_done = intent.getStringExtra(NumberRepsInputActivity.NUMBER_REPS_DONE_KEY);
-        String number_reps_done = "3";
-        Context context = getApplicationContext();
-        writeNumberReps(number_reps_done, context);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        String number_reps_done = data.getStringExtra(NumberRepsInputActivity.NUMBER_REPS_DONE_KEY);
+        try {
+            writeNumberReps(number_reps_done, getApplicationContext());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void refreshOnScreenInformation() {
@@ -93,7 +99,7 @@ public class CurrentExerciseActivity extends AppCompatActivity {
             Intent intent = new Intent(this, NumberRepsInputActivity.class);
             String numberTargetReps = mNumberReps.getText().toString();
             intent.putExtra(TARGET_REPS_KEY, numberTargetReps);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
 
             Long numberSetsRemaining = Long.parseLong(
                     mNumberSetsRemaining.getText().toString());
@@ -102,15 +108,37 @@ public class CurrentExerciseActivity extends AppCompatActivity {
         }
     }
 
-    public void writeNumberReps(String numberReps, Context context) {
-        try {
-            OutputStreamWriter outputStreamWriter =
-                    new OutputStreamWriter(
-                            context.openFileOutput("test.txt", Context.MODE_PRIVATE));
-            outputStreamWriter.write(numberReps);
-            outputStreamWriter.close();
-        } catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
+    public void writeNumberReps(String numberReps, Context context) throws IOException {
+        FileOutputStream fOut = openFileOutput("test",MODE_WORLD_READABLE);
+        fOut.write(numberReps.getBytes());
+        fOut.close();
+
+        FileInputStream fIn = openFileInput("test");
+        int c;
+        String temp="";
+        while( (c = fIn.read()) != -1){
+            temp = temp + Character.toString((char)c);
         }
+
+        Toast.makeText(getBaseContext(),"Saved: " + temp,Toast.LENGTH_SHORT).show();
+
+        //FileOutputStream stream = new FileOutputStream(getRecordFile());
+        //try {
+        //    stream.write(new String(numberReps + "\n").getBytes());
+        //} catch (IOException e) {
+        //   Log.e("Exception", "File write failed: " + e.toString());
+        //} finally {
+        //    stream.close();
+        //}
+    }
+
+    public File getRecordFile() {
+        File file = new File(Environment.getExternalStoragePublicDirectory(
+                   new String("MyBodyweightTrainer")), "test");
+        //File file = new File(new String("SanDisk SD card/MyBodyweightTrainer/test.txt"));
+        if (!file.mkdirs()) {
+            Log.e("Exception", "Directory not created");
+        }
+        return file;
     }
 }
