@@ -2,25 +2,31 @@ package company.mybodyweighttrainer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.FileInputStream;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
-import Exercises.Exercise;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
+import Tools.RepetitionBean;
 import Trainings.Program;
 import Trainings.Program2;
 
@@ -109,11 +115,34 @@ public class CurrentExerciseActivity extends AppCompatActivity {
     }
 
     public void writeNumberReps(String numberReps, Context context) throws IOException {
-        FileOutputStream fOut = openFileOutput("test",MODE_WORLD_READABLE);
-        fOut.write(numberReps.getBytes());
-        fOut.close();
+        final RepetitionBean bean_temp = new RepetitionBean(new Date(), new String("My Program"),
+                              new String("Dips"),
+                             1, Integer.parseInt(numberReps), 30);
+        final List<RepetitionBean> allRepetitions = Arrays.asList(bean_temp);
 
-        FileInputStream fIn = openFileInput("test");
+        ICsvBeanWriter beanWriter = null;
+        try {
+            beanWriter = new CsvBeanWriter(new FileWriter("test.txt")),
+                    CsvPreference.STANDARD_PREFERENCE);
+
+            final String[] header = new String[] {"date", "programName", "exerciseName",
+                "exerciseSetNumber", "repetitionNumber", "timeRestedBefore"};
+            final CellProcessor[] processors = getProcessors();
+
+            // Write the header.
+            beanWriter.writeHeader(header);
+            // Write the beans.
+            for (final RepetitionBean bean : allRepetitions) {
+                beanWriter.write(bean, header, processors);
+            }
+        }
+        finally {
+            if(beanWriter != null) {
+                beanWriter.close();
+            }
+        }
+
+        FileInputStream fIn = openFileInput("test.txt");
         int c;
         String temp="";
         while( (c = fIn.read()) != -1){
@@ -121,15 +150,6 @@ public class CurrentExerciseActivity extends AppCompatActivity {
         }
 
         Toast.makeText(getBaseContext(),"Saved: " + temp,Toast.LENGTH_SHORT).show();
-
-        //FileOutputStream stream = new FileOutputStream(getRecordFile());
-        //try {
-        //    stream.write(new String(numberReps + "\n").getBytes());
-        //} catch (IOException e) {
-        //   Log.e("Exception", "File write failed: " + e.toString());
-        //} finally {
-        //    stream.close();
-        //}
     }
 
     public File getRecordFile() {
