@@ -100,6 +100,8 @@ public class CurrentExerciseActivity extends AppCompatActivity {
         mExerciseName.setText(mProgram.getCurrentExercise().getName());
         mTimeRemaining.setText(Integer.toString(
                 mProgram.getCurrentExerciseSet().getCurrentRestingTime()));
+        mNumberTargetReps.setText(Integer.toString(
+                mProgram.getCurrentExerciseSet().getCurrentNumberTargetReps()));
     }
 
     /**

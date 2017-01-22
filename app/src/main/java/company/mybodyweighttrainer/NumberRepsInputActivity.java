@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 public class NumberRepsInputActivity extends AppCompatActivity {
     private EditText mNumberRepsPerformed;
+    private String mNumberTargetReps; // The ideal number of repetitions that should have been done.
+                                      // Is used to customize the Toast message.
     public final static String NUMBER_REPS_DONE_KEY =
         "company.mybodyweighttrainer.NUMBER_REPS_DONE";
 
@@ -36,8 +38,9 @@ public class NumberRepsInputActivity extends AppCompatActivity {
         // This enables to gain speed since, if it's the case, all the user has to do is to
         // validate the number without even having to type anything.
         Intent intent = getIntent();
-        String number_reps_target = intent.getStringExtra(CurrentExerciseActivity.TARGET_REPS_KEY);
-        mNumberRepsPerformed.setText(number_reps_target);
+        // TODO: fix the inconsistency in the variable naming (NumberTargetREPS, NumberREPSPerfo..)
+        mNumberTargetReps = intent.getStringExtra(CurrentExerciseActivity.TARGET_REPS_KEY);
+        mNumberRepsPerformed.setText(mNumberTargetReps);
 
         // Setting the cursor to the end of the line for faster entry.
         mNumberRepsPerformed.setSelection(mNumberRepsPerformed.getText().length());
@@ -76,9 +79,17 @@ public class NumberRepsInputActivity extends AppCompatActivity {
         returnIntent.putExtra(NUMBER_REPS_DONE_KEY, numberRepsDone);
         setResult(RESULT_OK, returnIntent);
 
-        // Displaying a little motivation message.
+        // Displaying a little motivation message. Its content will be based on the performance
+        // of the user compared to the target.
         Context context = getApplicationContext();
-        CharSequence text = "Congrats! Keep up man!";
+        CharSequence text;
+        if(Integer.parseInt(numberRepsDone) < Integer.parseInt(mNumberTargetReps)) {
+            text = "It's alright! Don't loose focus! Keep going!";
+        } else if(Integer.parseInt(numberRepsDone) == Integer.parseInt(mNumberTargetReps)) {
+            text = "That's impressive! You're on right track, keep pushing!";
+        } else{
+            text = "My GOD you're on steroid! I love it! Destroy EVERRYYYYTHIIINNNGG!!!";
+        }
         int duration = Toast.LENGTH_SHORT;
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();

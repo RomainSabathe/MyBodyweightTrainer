@@ -17,15 +17,21 @@ public class Program2 extends Program {
         mName = "Program 2";
 
         ExerciseSet exerciseSet1 = new ExerciseSet(
-                new Dips(),
-                new ArrayList<Integer>(
+                new Dips(), // exercise.
+                new ArrayList<Integer>( // number of target repetitions.
+                        Arrays.asList(8, 7, 6, 5)
+                ),
+                new ArrayList<Integer>( // resting time after each set.
                         Arrays.asList(5, 10, 15, 20)
                 )
         );
 
         ExerciseSet exerciseSet2 = new ExerciseSet(
-                new PullUp(),
-                new ArrayList<Integer>(
+                new PullUp(), // exercise.
+                new ArrayList<Integer>( // number of target repetitions.
+                        Arrays.asList(10, 9, 13, 11)
+                ),
+                new ArrayList<Integer>( // resting time after each set.
                         Arrays.asList(5, 10, 15, 20)
                 )
         );
