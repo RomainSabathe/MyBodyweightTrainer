@@ -23,6 +23,7 @@ public class ExerciseSet {
     private int mNumberSets;
     private int mProgression; // Tracks the progression of this set.
     private boolean mIsFinished;
+    private String mName; // Name of the exercise set, it actually the name of the mExercise.
 
     /**
      * Default constructor.
@@ -36,6 +37,7 @@ public class ExerciseSet {
         mNumberSets = restingTimes.size();
         mProgression = 0;
         mIsFinished = false;
+        mName = mExercise.getName();
     }
 
     /**
@@ -61,7 +63,13 @@ public class ExerciseSet {
         return mIsFinished;
     }
 
-    public int getNextRestingTime() {
+    public int getCurrentRestingTime() {
         return mRestingTimes.get(mProgression);
     }
+
+    public int getProgression() { return mProgression; }
+
+    public ArrayList<Integer> getRestingTimes() { return mRestingTimes; }
+
+    public String getName() { return mName; }
 }
