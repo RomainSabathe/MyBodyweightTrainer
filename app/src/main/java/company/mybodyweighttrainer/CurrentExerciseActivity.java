@@ -19,14 +19,14 @@ import org.supercsv.prefs.CsvPreference;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import Tools.RepetitionBean;
+import Tools.DatabaseHandler;
+import Tools.ExerciseSetSQLEntry;
 import Trainings.Program;
 import Trainings.Program2;
 
@@ -45,6 +45,8 @@ public class CurrentExerciseActivity extends AppCompatActivity {
     private String mCurrentExerciseName;
     private int mCurrentRestingTime;
 
+    private DatabaseHandler mPerformanceDatabase;
+
     public final static String TARGET_REPS_KEY =
         "company.mybodyweighttrainer.TARGET_REPS";
 
@@ -58,6 +60,8 @@ public class CurrentExerciseActivity extends AppCompatActivity {
         mNumberReps = (TextView)findViewById(R.id.text_number_reps_to_do);
         mNumberSetsRemaining = (TextView)findViewById(R.id.text_number_sets_remaining);
         mImDone = (Button)findViewById(R.id.button_im_done);
+
+        mPerformanceDatabase = new DatabaseHandler(this);
 
         mProgram = new Program2();
         refreshOnScreenInformation();
@@ -115,41 +119,9 @@ public class CurrentExerciseActivity extends AppCompatActivity {
     }
 
     public void writeNumberReps(String numberReps, Context context) throws IOException {
-        final RepetitionBean bean_temp = new RepetitionBean(new Date(), new String("My Program"),
-                              new String("Dips"),
-                             1, Integer.parseInt(numberReps), 30);
-        final List<RepetitionBean> allRepetitions = Arrays.asList(bean_temp);
-
-        ICsvBeanWriter beanWriter = null;
-        try {
-            beanWriter = new CsvBeanWriter(new FileWriter("test.txt")),
-                    CsvPreference.STANDARD_PREFERENCE);
-
-            final String[] header = new String[] {"date", "programName", "exerciseName",
-                "exerciseSetNumber", "repetitionNumber", "timeRestedBefore"};
-            final CellProcessor[] processors = getProcessors();
-
-            // Write the header.
-            beanWriter.writeHeader(header);
-            // Write the beans.
-            for (final RepetitionBean bean : allRepetitions) {
-                beanWriter.write(bean, header, processors);
-            }
-        }
-        finally {
-            if(beanWriter != null) {
-                beanWriter.close();
-            }
-        }
-
-        FileInputStream fIn = openFileInput("test.txt");
-        int c;
-        String temp="";
-        while( (c = fIn.read()) != -1){
-            temp = temp + Character.toString((char)c);
-        }
-
-        Toast.makeText(getBaseContext(),"Saved: " + temp,Toast.LENGTH_SHORT).show();
+        ExerciseSetSQLEntry newEntry = new ExerciseSetSQLEntry(new Date(), "Program 2",
+                "Dips", 1, Integer.parseInt(numberReps), 30);
+        mPerformanceDatabase.addNewRecord(newEntry);
     }
 
     public File getRecordFile() {
