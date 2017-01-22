@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -99,8 +100,10 @@ public class CurrentExerciseActivity extends AppCompatActivity {
      * - the activity "NumberRepsInput" is launched so the user can indicate the number of reps
      *   he just has done.
      * - the next exercise and its characteristics are loaded and displayed on screen.
+     *
+     * @param view Application view. Is mandatory since this method is called via a UI button.
      */
-    public void imDone() {
+    public void imDone(View view) {
         if(!mIsResting) {  // The button is useless if the user's resting.
             // Taking act that the user has performed a set.
             mProgram.performOneSet();
