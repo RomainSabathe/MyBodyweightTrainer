@@ -13,8 +13,6 @@ import Exercises.Exercise;
  *
  * <p>Similarly to a Program, an ExerciseSet is designed to be started and completed. It ends when
  * all the sets have been performed.
- *
- * TODO: add the number of repetitions for each set as a target.
  */
 
 public class ExerciseSet {
