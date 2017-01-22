@@ -14,6 +14,8 @@ import Exercises.PullUp;
 public class Program2 extends Program {
 
     public Program2() {
+        mName = "Program 2";
+
         ExerciseSet exerciseSet1 = new ExerciseSet(
                 new Dips(),
                 new ArrayList<Integer>(

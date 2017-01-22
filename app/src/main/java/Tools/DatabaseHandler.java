@@ -5,8 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.content.Context;
 
-import java.util.Date;
-
 /**
  * Created by root on 22/01/17.
  */
@@ -61,7 +59,7 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(KEY_DATE, "NOW()");
+        values.put(KEY_DATE, String.valueOf(entry.getmDate()));
         values.put(KEY_PROGRAM_NAME, entry.getmProgramName());
         values.put(KEY_EXERCISE_NAME, entry.getmExerciseName());
         values.put(KEY_EXERCISESET_NUMBER, entry.getmExerciseSetNumber());

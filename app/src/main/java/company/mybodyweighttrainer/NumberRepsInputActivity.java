@@ -12,8 +12,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class NumberRepsInputActivity extends AppCompatActivity {
+/**
+ * In this activity, the User is asked to indicate the number of repetition he has just performed
+ * over the last set.
+ * The result is then sent back (as a String) to the calling activity.
+ */
 
+public class NumberRepsInputActivity extends AppCompatActivity {
     private EditText mNumberRepsPerformed;
     public final static String NUMBER_REPS_DONE_KEY =
         "company.mybodyweighttrainer.NUMBER_REPS_DONE";
@@ -23,11 +28,15 @@ public class NumberRepsInputActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_number_reps_input);
 
+        // Linking UI elements with code variables.
         mNumberRepsPerformed = (EditText)findViewById(R.id.text_number_reps_done);
 
+        // Catching the target number of repetition. Ideally, if the user has fully and
+        // successfully completed the exercise, he/she should have done that many number of reps.
+        // This enables to gain speed since, if it's the case, all the user has to do is to
+        // validate the number without even having to type anything.
         Intent intent = getIntent();
-        String number_reps_target = intent.getStringExtra(
-                CurrentExerciseActivity.TARGET_REPS_KEY);
+        String number_reps_target = intent.getStringExtra(CurrentExerciseActivity.TARGET_REPS_KEY);
         mNumberRepsPerformed.setText(number_reps_target);
 
         // Setting the cursor to the end of the line for faster entry.
@@ -38,14 +47,17 @@ public class NumberRepsInputActivity extends AppCompatActivity {
                 Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
 
+        // Tracking the keyboard activity.
+        // If the "Enter" button is pushed or the "Previous" button, the User is sent back to the
+        // CurrentExercise activity and the result of his/her entry is sent back to this activity.
         mNumberRepsPerformed.setOnEditorActionListener(
                 new TextView.OnEditorActionListener(){
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE |
                     actionId == KeyEvent.KEYCODE_BACK) {
-                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);                  
-                    validateEntry();
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0); // Hiding the keyboard.
+                    validateEntry(); // Getting the User's entry and switching back to previous act.
                     return true;
                 }
                 return false;
@@ -53,7 +65,12 @@ public class NumberRepsInputActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Catches the number of repetitions entered by the user and sends it back to the calling
+     * activity (CurrentExercise).
+     */
     public void validateEntry() {
+        // Creating the Intent and linking to it the number of repetition.
         Intent returnIntent = new Intent();
         String numberRepsDone = mNumberRepsPerformed.getText().toString();
         returnIntent.putExtra(NUMBER_REPS_DONE_KEY, numberRepsDone);
@@ -63,8 +80,8 @@ public class NumberRepsInputActivity extends AppCompatActivity {
         Context context = getApplicationContext();
         CharSequence text = "Congrats! Keep up man!";
         int duration = Toast.LENGTH_SHORT;
-        //Toast toast = Toast.makeText(context, text, duration);
-        //toast.show();
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
 
         finish();
     }
