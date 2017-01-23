@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -97,6 +98,9 @@ public class CurrentExerciseActivity extends AppCompatActivity {
      * This functions does that.
      */
     private void refreshOnScreenInformation() {
+        int lastPerf = mPerformanceDatabase.getLastRecordedNumberRep(mProgram);
+        Log.d("lastPerf", "\nLast time performance: " + Integer.toString(lastPerf) + "\n");
+
         mExerciseName.setText(mProgram.getCurrentExercise().getName());
         mTimeRemaining.setText(Integer.toString(
                 mProgram.getCurrentExerciseSet().getCurrentRestingTime()));

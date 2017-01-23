@@ -3,7 +3,10 @@ package Tools;
 import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.Cursor;
 import android.content.Context;
+
+import Trainings.Program;
 
 /**
  * Created by root on 22/01/17.
@@ -68,5 +71,32 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
 
         db.insert(TABLE_PERFORMANCE_RECORD, null, values);
         db.close();
+    }
+
+    public int getLastRecordedNumberRep(Program programBeingPerformed) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Getting the variables for performing the filtering.
+        String programName = programBeingPerformed.getmName();
+        String exerciseName = programBeingPerformed.getCurrentExercise().getName();
+        int exerciseSetNumber = programBeingPerformed.getCurrentExerciseSet().getProgression();
+
+        // Building the query.
+        String query = "Select " + KEY_REPETITION_NUMBER + " FROM " + TABLE_PERFORMANCE_RECORD +
+            " WHERE " +
+                KEY_PROGRAM_NAME + "='" + programName + "' AND " +
+                KEY_EXERCISE_NAME + "='" + exerciseName + "' AND " +
+                KEY_EXERCISESET_NUMBER + "=" + exerciseSetNumber +
+            " ORDER BY ID DESC LIMIT 1";
+
+        Cursor cursor = db.rawQuery(query, null);
+        int result = -1;
+        if (cursor.moveToFirst()) {
+            cursor.moveToFirst();
+            result = cursor.getInt(0);
+        }
+        // Otherwise the user has never done this exercise before and the `result` var. is valid.
+
+        return result;
     }
 }
