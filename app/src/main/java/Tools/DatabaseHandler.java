@@ -73,10 +73,22 @@ public class DatabaseHandler  extends SQLiteOpenHelper {
         db.close();
     }
 
+    /**
+     * Query the database to find the last entry the User provided (during a previous training),
+     * and which correspond to the same `progression` (same program, same exercise set, same
+     * set). This is used so that the User can see its previous performance and try to improve on
+     * it.
+     *
+     * @param programBeingPerformed The program which is currently being performed by the User.
+     *                              This function will return the last entry matching the
+     *                              `mProgression` of `programBeingPerformed`.
+     * @return The number of reps the User has performed on the same program and progression,
+     *         during the last workout session.
+     */
     public int getLastRecordedNumberRep(Program programBeingPerformed) {
         SQLiteDatabase db = this.getWritableDatabase();
 
-        // Getting the variables for performing the filtering.
+        // Getting the variables for doing the filtering.
         String programName = programBeingPerformed.getmName();
         String exerciseName = programBeingPerformed.getCurrentExercise().getName();
         int exerciseSetNumber = programBeingPerformed.getCurrentExerciseSet().getProgression();

@@ -23,6 +23,7 @@ public class CurrentExerciseActivity extends AppCompatActivity {
     private TextView mExerciseName;
     private TextView mNumberTargetReps;
     private TextView mNumberSetsRemaining;
+    private TextView mTextNumberPreviousReps;
     private Button mImDone;
 
     // Variables related to the timer.
@@ -53,6 +54,7 @@ public class CurrentExerciseActivity extends AppCompatActivity {
         mExerciseName = (TextView)findViewById(R.id.text_exercise_name);
         mNumberTargetReps = (TextView)findViewById(R.id.text_number_reps_to_do);
         mNumberSetsRemaining = (TextView)findViewById(R.id.text_number_sets_remaining);
+        mTextNumberPreviousReps = (TextView)findViewById(R.id.text_previous_number_reps);
         mImDone = (Button)findViewById(R.id.button_im_done);
 
         // Initialisation the database.
@@ -98,14 +100,18 @@ public class CurrentExerciseActivity extends AppCompatActivity {
      * This functions does that.
      */
     private void refreshOnScreenInformation() {
-        int lastPerf = mPerformanceDatabase.getLastRecordedNumberRep(mProgram);
-        Log.d("lastPerf", "\nLast time performance: " + Integer.toString(lastPerf) + "\n");
-
         mExerciseName.setText(mProgram.getCurrentExercise().getName());
         mTimeRemaining.setText(Integer.toString(
                 mProgram.getCurrentExerciseSet().getCurrentRestingTime()));
         mNumberTargetReps.setText(Integer.toString(
                 mProgram.getCurrentExerciseSet().getCurrentNumberTargetReps()));
+
+        // Getting the last performance of the User on this particular exercise and showing it.
+        int lastPerf = mPerformanceDatabase.getLastRecordedNumberRep(mProgram);
+        if (lastPerf >= 0) {
+            mTextNumberPreviousReps.setText(
+                    "Last time you did " + Integer.toString(lastPerf) + " reps.");
+        } else { mTextNumberPreviousReps.setText("You have never done this set before."); }
     }
 
     /**

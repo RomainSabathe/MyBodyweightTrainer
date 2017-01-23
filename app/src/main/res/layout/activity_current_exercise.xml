@@ -45,7 +45,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="0.50">
+            android:layout_weight="0.19">
 
             <TextView
                 android:layout_width="match_parent"
@@ -73,10 +73,18 @@
                 android:textAlignment="textStart"/>
         </LinearLayout>
 
+        <TextView
+            android:text="Last time you did X reps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_previous_number_reps"
+            android:textSize="20sp"
+            android:layout_weight="0.17" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="67dp"
             android:weightSum="1"
             >
 
