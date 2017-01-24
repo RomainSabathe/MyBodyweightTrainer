@@ -3,6 +3,7 @@ package Exercises;
 import java.util.ArrayList;
 
 import Exercises.Exercise;
+import Exercises.Objective;
 
 /**
  * Created by Romain on 04/01/2017.
@@ -17,7 +18,7 @@ import Exercises.Exercise;
 
 public class ExerciseSet {
     private Exercise mExercise;
-    private ArrayList<Integer> mNumberTargetReps; // the list of target repetition, one value per set.
+    private ArrayList<Objective> mObjectiveReps; // the list of Objectives per set.
     private ArrayList<Integer> mRestingTimes; // the list of resting time after each set.
     private int mNumberSets;
     private int mProgression; // Tracks the progression of this set.
@@ -34,10 +35,10 @@ public class ExerciseSet {
      *                     ExerciseSet. The values should be given in seconds and represent the
      *                     resting time after performing each set.
      */
-    public ExerciseSet(Exercise exercise, ArrayList<Integer> numberTargetReps,
+    public ExerciseSet(Exercise exercise, ArrayList<Objective> objectiveReps,
                        ArrayList<Integer> restingTimes) {
         mExercise = exercise;
-        mNumberTargetReps = numberTargetReps;
+        mObjectiveReps= objectiveReps;
         mRestingTimes = restingTimes;
         mNumberSets = restingTimes.size();
         mProgression = 0;
