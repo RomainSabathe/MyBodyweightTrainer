@@ -12,7 +12,7 @@ package Exercises;
  * Note that the usage of this class is simplified by the Builder Design Pattern.
  * More info can be found at:
  * http://stackoverflow.com/questions/222214/managing-constructors-with-many-parameters-in-java/222295#222295
- * and using the doc the `ObjectiveBuilder` class.
+ * and using the doc of the `ObjectiveBuilder` class.
  */
 
 public class Objective {

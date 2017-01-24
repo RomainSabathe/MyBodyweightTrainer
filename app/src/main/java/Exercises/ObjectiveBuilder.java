@@ -17,27 +17,38 @@ public class ObjectiveBuilder {
 
     public ObjectiveBuilder() { }
 
-    public Objective buildObjective(int targetRepsMin, int targetRepsMax) {
-        return new Objective(targetRepsMin, targetRepsMax, _mBasedOnPreviousPerformance,
+    public Objective buildObjective() {
+        return new Objective(_mTargetRepsMin, _mTargetRepsMax, _mBasedOnPreviousPerformance,
                              _mIncrementTargetReps);
+    }
+
+    public ObjectiveBuilder min(int targetRepsMin) {
+        this._mTargetRepsMin = targetRepsMin;
+        return this;
+    }
+
+    public ObjectiveBuilder max(int targetRepsMax) {
+        this._mTargetRepsMax = targetRepsMax;
+        return this;
     }
 
     /**
      * Use this constructor when there is not a range of targets but rather only one target.
      * @param targetReps The repetition target to be applied.
      */
-    public Objective buildObjective(int targetReps) {
-        return new Objective(targetReps, targetReps, _mBasedOnPreviousPerformance,
-                _mIncrementTargetReps);
+    public ObjectiveBuilder nbReps(int targetReps) {
+        this._mTargetRepsMin = targetReps;
+        this._mTargetRepsMax = targetReps;
+        return this;
     }
 
-    /**
-     * Use this constructor when there is not a range of targets but rather only one target,
-     * the `BasedOnPreviousPerformance` can be set as well.
-     * @param targetReps The repetition target to be applied.
-     */
-    public Objective buildObjective(int targetReps, boolean basedOnPreviousPerformance) {
-        return new Objective(targetReps, targetReps, basedOnPreviousPerformance,
-                _mIncrementTargetReps);
+    public ObjectiveBuilder progressive(boolean basedOnPreviousPerformance) {
+        this._mBasedOnPreviousPerformance = basedOnPreviousPerformance;
+        return this;
+    }
+
+    public ObjectiveBuilder increment(int incrementTargetRep) {
+        this._mIncrementTargetReps = incrementTargetRep;
+        return this;
     }
 }
